@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileText, Calendar, User, Home, DollarSign, Plus, Search, Eye, Edit, Trash2 } from 'lucide-react';
+import { FileText, Calendar, User, Home, IndianRupee, Plus, Search, Eye, Edit, Trash2 } from 'lucide-react';
 
 interface Lease {
   id: number;
@@ -157,8 +157,8 @@ export function Leases({ leases, tenants, onAddLease, onEditLease, onDeleteLease
               <p><User className="inline h-4 w-4 text-gray-400 mr-1" /> Tenant: {lease.tenantName}</p>
               <p><Home className="inline h-4 w-4 text-gray-400 mr-1" /> Property: {lease.propertyName} - Unit {lease.unit}</p>
               <p><Calendar className="inline h-4 w-4 text-gray-400 mr-1" /> Term: {lease.startDate} to {lease.endDate}</p>
-              <p><DollarSign className="inline h-4 w-4 text-gray-400 mr-1" /> Rent: ${lease.monthlyRent}/month</p>
-              <p><DollarSign className="inline h-4 w-4 text-gray-400 mr-1" /> Deposit: ${lease.securityDeposit}</p>
+              <p><IndianRupee className="inline h-4 w-4 text-gray-400 mr-1" /> Rent: ₹{lease.monthlyRent}/month</p>
+              <p><IndianRupee className="inline h-4 w-4 text-gray-400 mr-1" /> Deposit: ₹{lease.securityDeposit}</p>
             </div>
 
             <div className="lease-actions flex space-x-2">

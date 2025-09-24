@@ -222,7 +222,7 @@ export function Payments({ payments, tenants, onAddPayment, onUpdatePayment }: P
                   <p className="text-sm text-gray-800">{payment.propertyName}</p>
                 </div>
                 <div className="amount-info">
-                  <p className="font-medium text-gray-800">${payment.amount}</p>
+                  <p className="font-medium text-gray-800">₹{payment.amount}</p>
                   {payment.paymentMethod && <p className="text-sm text-gray-600">{payment.paymentMethod}</p>}
                 </div>
                 <div className="due-date">
