@@ -1,53 +1,36 @@
-import axios from 'axios';
+// src/api/axios.ts
+import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5141/api';
+// Get backend URL from environment variable with fallback
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5141/api";
 
-console.log('🔗 API Base URL:', API_BASE_URL); // Should show port 5411
-
-export const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  timeout: 10000,
+// Create axios instance with backend base URL
+const API = axios.create({
+  baseURL: apiBaseUrl,
 });
 
-// Request interceptor
-api.interceptors.request.use(
+// Request interceptor for logging (optional)
+API.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('authToken');
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    console.log('🚀 Making API request to:', config.baseURL + config.url);
+    console.log(`Making ${config.method?.toUpperCase()} request to: ${config.url}`);
     return config;
   },
   (error) => {
-    console.error('❌ Request error:', error);
     return Promise.reject(error);
   }
 );
 
-// Response interceptor
-api.interceptors.response.use(
-  (response) => {
-    console.log('✅ API response received:', response.status);
-    return response;
-  },
+// Response interceptor for error handling
+API.interceptors.response.use(
+  (response) => response,
   (error) => {
-    console.error('❌ API Error Details:', {
-      message: error.message,
-      code: error.code,
-      url: error.config?.baseURL + error.config?.url,
-      status: error.response?.status,
-    });
-    
-    if (error.code === 'ECONNREFUSED' || error.message === 'Network Error') {
-      console.error('💥 Cannot connect to backend on port 5411!');
+    console.error("API Error:", error.response?.data || error.message);
+    if (error.response?.status === 401) {
+      localStorage.removeItem("token");
+      window.location.href = "/";
     }
-    
     return Promise.reject(error);
   }
 );
 
-export default api;
+export default API;

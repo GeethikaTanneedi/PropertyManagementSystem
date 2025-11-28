@@ -228,7 +228,8 @@ function App() {
     return <Auth onLogin={handleLogin} onSignup={handleSignup} />;
 
   return (
-    <BrowserRouter basename="/PropertyManagementSystem/">
+    // REMOVED basename for Kubernetes deployment
+    <BrowserRouter>
       <div className="app min-h-screen bg-gray-50">
         <Navbar
           currentView={currentView}
